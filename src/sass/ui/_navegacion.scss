@@ -1,0 +1,28 @@
+@use "global" as c;
+
+.navegacion {
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 2rem;
+  a {
+    margin-right: 2rem;
+    color: c.$grism;
+    transition: color 0.2s linear;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &:hover {
+      cursor: pointer;
+      color: c.$naranja;
+    }
+  }
+}
+
+@include c.md {
+  .navegacion {
+    display: unset;
+    padding-top: 0;
+  }
+}

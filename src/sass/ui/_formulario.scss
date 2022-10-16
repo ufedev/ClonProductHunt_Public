@@ -1,0 +1,57 @@
+@use "global" as c;
+
+.form {
+  padding: 5rem 0;
+  max-width: 400px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin: 5rem auto;
+  .form__div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    & input,
+    & textarea {
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      border: none;
+      background-color: c.$grisc;
+
+      &:focus {
+        outline: 1px solid c.$naranja;
+        box-shadow: 0 0 5px 1px c.$naranja;
+      }
+    }
+    & label {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: c.$grism;
+    }
+  }
+
+  .form__field {
+    max-width: 100%;
+    width: 100%;
+    padding: 3rem;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 1px rgba($color: c.$naranja, $alpha: 0.3);
+    legend {
+      margin: 0 1rem;
+      background-color: rgba($color: c.$naranja, $alpha: 0.9);
+      border-radius: 5px;
+      padding: 1rem;
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.form--big {
+  max-width: 800px;
+}
