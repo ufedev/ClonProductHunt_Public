@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "../src/components/Layout"
-import { useEffect, createRef } from "react"
+import { useState, useEffect, createRef } from "react"
 import Router from "next/router"
 import useFirebase from "../hooks/useFirebase"
 import useValidate from "../hooks/useValidate"
 import crearProducto from "../validates/crearProducto"
 import { Error } from "../src/stylecomp/stylecomp"
+import Spinner from "../src/components/ui/Spinner"
 const stateInicial = {
   nombre: "",
   empresa: "",
@@ -15,6 +16,7 @@ const stateInicial = {
 }
 const nuevoProducto = () => {
   const { usuario, firebase } = useFirebase()
+  const [load, setLoad] = useState(false)
   const imagenFile = createRef()
   useEffect(() => {
     if (!usuario) {
@@ -37,8 +39,9 @@ const nuevoProducto = () => {
       comentarios: [],
       creado: Date.now(),
     }
-
+    setLoad(true)
     const up = await firebase.nuevoProducto(producto)
+    setLoad(false)
     if (up) {
       Router.push("/")
     }
@@ -112,6 +115,8 @@ const nuevoProducto = () => {
 
         <input className="btn--t" type="submit" value="Crear" />
       </form>
+
+      {load && <Spinner />}
     </Layout>
   )
 }
