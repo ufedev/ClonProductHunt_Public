@@ -17,6 +17,8 @@ import {
   getDocs,
   query,
   orderBy,
+  getDoc,
+  doc,
 } from "firebase/firestore"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 class Fire {
@@ -66,6 +68,19 @@ class Fire {
     })
 
     return productos
+  }
+
+  async obtenerProducto(id) {
+    try {
+      const prod = await getDoc(doc(this.db, "productos", id))
+      if (prod.exists()) {
+        return prod.data()
+      } else {
+        return { error: true }
+      }
+    } catch (error) {
+      return { error: true }
+    }
   }
   //Imagenes
   async subirImagen(imagen) {

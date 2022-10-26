@@ -1,5 +1,6 @@
 import { formatDistance, subDays } from "date-fns"
 import { es } from "date-fns/locale"
+import Link from "next/link"
 const Producto = ({ producto }) => {
   return (
     <div className="producto">
@@ -14,7 +15,9 @@ const Producto = ({ producto }) => {
           />
         </picture>
         <div className="producto__div--info">
-          <h4>{producto.nombre}</h4>
+          <Link href={`productos/${producto.id}`}>
+            <h4>{producto.nombre}</h4>
+          </Link>
           <p>{producto.descripcion}</p>
           <div className="producto__div--social">
             <div className="producto__coments">

@@ -19,7 +19,6 @@ export default function Home() {
 
     getProd()
   }, [])
-  console.log(productos)
 
   return (
     <Layout>

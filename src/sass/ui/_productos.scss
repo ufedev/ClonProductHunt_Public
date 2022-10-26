@@ -1,10 +1,27 @@
 @use "global" as c;
 
+.producto__individual--header {
+  img {
+    max-width: 300px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4);
+  }
+}
+.producto__individual--body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.producto__individual--acciones {
+  display: flex;
+  gap: 2rem;
+}
 .producto {
   h4,
   p {
     margin: 0;
-    paddign: 0;
+    padding: 0;
     line-height: 1.7;
   }
   position: relative;
@@ -94,5 +111,63 @@
 
   &:hover {
     outline: 1px solid c.$naranja;
+  }
+}
+.producto__btn {
+  background-color: c.$grisc;
+  padding: 2rem 3rem;
+  border-radius: 5px;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+  letter-spacing: 0rem;
+  cursor: pointer;
+  z-index: 20;
+  &.visit {
+    border: 1px solid c.$grisc;
+    background-color: white;
+    transition: border 0.2s ease;
+    &:hover {
+      border-color: c.$naranja;
+    }
+  }
+  &.vote__btn {
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(
+        14deg,
+        rgb(184, 91, 4),
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(81, 5, 168, 0.3)
+      );
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    &:hover::after {
+      opacity: 1;
+    }
+    position: relative;
+    background-color: c.$naranja;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    z-index: 20;
+    div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 10;
+    }
   }
 }
