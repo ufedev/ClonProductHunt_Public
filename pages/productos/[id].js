@@ -21,7 +21,7 @@ const Producto = () => {
 
     fn()
   }, [id])
-  console.log(producto)
+
   return (
     <Layout>
       {load ? (
@@ -74,6 +74,23 @@ const Producto = () => {
                         </div>
                       </button>
                     </div>
+                  </div>
+                </div>
+                <div>
+                  <form className="form">
+                    <div className="form__div">
+                      <input type="text" name="comentario" />
+                    </div>
+                    <input type="submit" value="Comentar" className="btn--t" />
+                  </form>
+
+                  <div className="form">
+                    <h4>Comentarios</h4>
+                    <ul>
+                      {producto?.comentarios?.map((comment) => (
+                        <li key={comment}>{comment}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>

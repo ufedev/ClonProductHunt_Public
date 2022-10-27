@@ -38,6 +38,10 @@ const nuevoProducto = () => {
       votos: 0,
       comentarios: [],
       creado: Date.now(),
+      creador: {
+        id: usuario.uid,
+        nombre: usuario.displayName,
+      },
     }
     setLoad(true)
     const up = await firebase.nuevoProducto(producto)
@@ -46,6 +50,8 @@ const nuevoProducto = () => {
       Router.push("/")
     }
   }
+
+  console.log(usuario)
   return (
     <Layout>
       <h4 className="page__title">Crear Publicación</h4>
