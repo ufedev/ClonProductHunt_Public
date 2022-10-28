@@ -36,6 +36,7 @@ const nuevoProducto = () => {
       descripcion,
       imagen: imagenFile.current.files[0],
       votos: 0,
+      votantes: [],
       comentarios: [],
       creado: Date.now(),
       creador: {
@@ -51,7 +52,6 @@ const nuevoProducto = () => {
     }
   }
 
-  console.log(usuario)
   return (
     <Layout>
       <h4 className="page__title">Crear Publicación</h4>

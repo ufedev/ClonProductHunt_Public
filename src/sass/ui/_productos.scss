@@ -71,7 +71,13 @@
   gap: 1rem;
   align-items: center;
 }
-
+.producto__div--descripcion {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
 .producto__div--info {
   z-index: 20;
   flex: 1;

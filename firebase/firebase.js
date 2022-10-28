@@ -19,6 +19,7 @@ import {
   orderBy,
   getDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 class Fire {
@@ -81,6 +82,12 @@ class Fire {
     } catch (error) {
       return { error: true }
     }
+  }
+
+  async updateProducto(id, data) {
+    try {
+      return await updateDoc(doc(this.db, "productos", id), data)
+    } catch (e) {}
   }
   //Imagenes
   async subirImagen(imagen) {

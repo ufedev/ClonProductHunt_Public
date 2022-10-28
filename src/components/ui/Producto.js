@@ -18,7 +18,7 @@ const Producto = ({ producto }) => {
           <Link href={`productos/${producto.id}`}>
             <h4>{producto.nombre}</h4>
           </Link>
-          <p>{producto.descripcion}</p>
+          <p className="producto__div--descripcion">{producto.descripcion}</p>
           <div className="producto__div--social">
             <div className="producto__coments">
               <svg
