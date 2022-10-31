@@ -1,9 +1,12 @@
 import { useRouter } from "next/router"
+import { formatDistance, subDays } from "date-fns"
+import { es } from "date-fns/locale"
 import { useState, useEffect } from "react"
 import useFirebase from "../../hooks/useFirebase"
 import Layout from "../../src/components/Layout"
 import Spinner from "../../src/components/ui/Spinner"
 const Producto = () => {
+  const [comentario, setComentario] = useState("")
   const [producto, setProducto] = useState({})
   const [load, setLoad] = useState(false)
   const { firebase, usuario } = useFirebase()
@@ -22,6 +25,43 @@ const Producto = () => {
     fn()
   }, [id])
 
+  //** Comentario */
+
+  const handleComentar = async (e) => {
+    e.preventDefault()
+
+    if (!comentario) {
+      alert("debe escribir algo")
+      return
+    }
+    if (comentario.length > 150) {
+      alert("Tiene un maximo de 150 caracteres")
+      return
+    }
+
+    const comment = {
+      id: Math.random().toString(32).substring(2),
+      usuarioId: usuario.uid,
+      usuarioNombre: usuario.displayName,
+      comentarioString: comentario,
+      fecha: Date.now(),
+    }
+
+    //guardar en db
+    firebase.updateProducto(id, {
+      comentarios: [...producto.comentarios, comment],
+    })
+
+    //actualizar Statements
+    setProducto({
+      ...producto,
+      comentarios: [...producto.comentarios, comment],
+    })
+
+    setComentario("")
+  }
+
+  //! VOTOS
   const handleVotar = async () => {
     if (!usuario) {
       router.push("/")
@@ -45,6 +85,20 @@ const Producto = () => {
     })
   }
 
+  //!! ElIMINAR PRODUCTO
+
+  const handleEliminarProducto = async (e) => {
+    e.preventDefault()
+
+    if (usuario.uid !== producto.creador.id) return
+    const confirmar = confirm("Esta segur@ de eliminar?")
+    if (confirmar) {
+      await firebase.deleteProducto(id)
+      router.push("/")
+    } else {
+      return
+    }
+  }
   return (
     <Layout>
       {load ? (
@@ -70,6 +124,14 @@ const Producto = () => {
                   <div className="producto__individual--body">
                     <p>{producto.descripcion}</p>
                     <div className="producto__individual--acciones">
+                      {usuario?.uid === producto?.creador?.id && (
+                        <button
+                          className="btn"
+                          onClick={handleEliminarProducto}
+                        >
+                          Eliminar
+                        </button>
+                      )}
                       <a
                         className="producto__btn visit"
                         target="__blank"
@@ -106,9 +168,14 @@ const Producto = () => {
                 </div>
                 <div>
                   {usuario && (
-                    <form className="form">
+                    <form className="form" onSubmit={handleComentar}>
                       <div className="form__div">
-                        <input type="text" name="comentario" />
+                        <input
+                          type="text"
+                          name="comentario"
+                          value={comentario}
+                          onChange={(e) => setComentario(e.target.value)}
+                        />
                       </div>
                       <input
                         type="submit"
@@ -119,10 +186,35 @@ const Producto = () => {
                   )}
 
                   <div className="form">
-                    <h4>Comentarios</h4>
-                    <ul>
+                    <h2>Comentarios</h2>
+                    <ul className="producto__comentarios">
                       {producto?.comentarios?.map((comment) => (
-                        <li key={comment}>{comment}</li>
+                        <li
+                          key={comment?.id}
+                          className={`comment ${
+                            comment.usuarioId === producto?.creador?.id
+                              ? "creator"
+                              : ""
+                          }`}
+                        >
+                          <p className="comment__body">
+                            {comment?.comentarioString}
+                          </p>
+                          <p className="comment__user">
+                            Escrito por {comment?.usuarioNombre}
+                          </p>
+                          <p className="comment__date">
+                            {" "}
+                            {formatDistance(
+                              new Date(comment?.fecha),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                                locale: es,
+                              }
+                            )}
+                          </p>
+                        </li>
                       ))}
                     </ul>
                   </div>

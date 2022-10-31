@@ -20,6 +20,7 @@ import {
   getDoc,
   doc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 class Fire {
@@ -54,13 +55,10 @@ class Fire {
     const prodAct = { ...producto, imagen: img, imgUrl: imgUrl }
     return await addDoc(collection(this.db, "productos"), prodAct)
   }
-  async obtenerProductos() {
+  async obtenerProductos(field = "creado", mode = "desc") {
     let productos = []
 
-    const qry = query(
-      collection(this.db, "productos"),
-      orderBy("creado", "desc")
-    )
+    const qry = query(collection(this.db, "productos"), orderBy(field, mode))
 
     const qrySnap = await getDocs(qry)
 
@@ -87,6 +85,12 @@ class Fire {
   async updateProducto(id, data) {
     try {
       return await updateDoc(doc(this.db, "productos", id), data)
+    } catch (e) {}
+  }
+
+  async deleteProducto(id) {
+    try {
+      return await deleteDoc(doc(this.db, "productos", id))
     } catch (e) {}
   }
   //Imagenes

@@ -1,7 +1,21 @@
-import lupa from "../../../public/static/img/lupa.svg"
+import { useState } from "react"
+import Router from "next/router"
+
 const Buscador = () => {
+  const [search, setSearch] = useState("")
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+
+    Router.push({
+      pathname: "/buscar",
+      query: {
+        q: search,
+      },
+    })
+  }
   return (
-    <form className="buscador">
+    <form className="buscador" onSubmit={handleSearch}>
       <div className="input__buscar">
         <div className="lupa">
           <svg
@@ -19,7 +33,12 @@ const Buscador = () => {
             />
           </svg>
         </div>
-        <input type="text" placeholder="Buscar" />
+        <input
+          type="text"
+          placeholder="Buscar"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
     </form>
   )

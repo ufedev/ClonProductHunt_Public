@@ -17,6 +17,35 @@
   display: flex;
   gap: 2rem;
 }
+
+.producto__comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  li.comment {
+    display: block;
+    padding: 1rem 3rem;
+    border: 1px solid c.$grisc;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.1);
+
+    .comment__user,
+    .comment__date {
+      text-decoration: underline;
+      color: c.$grism;
+      font-size: 1.2rem;
+    }
+    .comment__date {
+      text-decoration: none;
+    }
+  }
+
+  li.creator {
+    border-color: c.$naranja !important;
+  }
+}
+
 .producto {
   h4,
   p {

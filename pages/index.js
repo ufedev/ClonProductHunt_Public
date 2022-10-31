@@ -11,7 +11,7 @@ export default function Home() {
     async function getProd() {
       setLoad(true)
 
-      const prod = await firebase.obtenerProductos()
+      const prod = await firebase.obtenerProductos("creado", "desc")
 
       setProductos(prod)
       setLoad(false)
